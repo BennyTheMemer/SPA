@@ -73,11 +73,11 @@ function renderPage(path) {
 
       // Find all script tags that were just added
       const scripts = pageContent.getElementsByTagName("script");
-
       // Convert to array because we'll be modifying the live HTMLCollection
       const scriptsArray = Array.from(scripts);
 
-      // Function to load scripts sequentially
+      // Function to load scripts sequentially. This is needed becase after injecting the HTML, although the HTML includes the scripts, they won't run.
+      // So we need to just pretty much get the script information from the html file, recreate them and inject them.
       const loadScriptSequentially = (scripts, index) => {
         if (index < scripts.length) {
           const script = scripts[index];
@@ -93,6 +93,7 @@ function renderPage(path) {
               new URL(pageToRender, window.location.href)
             ).pathname;
             newScript.src = srcPath;
+            console.log(newScript)
             newScript.onload = () => loadScriptSequentially(scripts, index + 1);
           } else {
             newScript.textContent = script.textContent;

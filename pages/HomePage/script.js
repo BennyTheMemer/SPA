@@ -1,4 +1,6 @@
 import { createPokemonCard } from "../../components/pokemon/Pokemon.js";
+import { sessionStorageCache } from "../../components/other/cache.js";
+
 
 function initializeHomePage() {
     const searchButton = document.getElementById("search-button");
@@ -24,6 +26,9 @@ function searchPokemon() {
         })
         .then(data => {
             displayPokemonInfo(data);
+            const cache = new sessionStorageCache()
+            cache.insertData(searchInput.toLowerCase(), data)
+
         })
         .catch(error => {
             console.error('Error:', error);
