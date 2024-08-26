@@ -1,11 +1,17 @@
-import { createPokemonCard } from "./components/pokemon/Pokemon.js";
+import { createPokemonCard } from "../../components/pokemon/Pokemon.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+function initializeHomePage() {
     const searchButton = document.getElementById("search-button");
     const searchInput = document.getElementById("pokemon-search");
-    searchInput.addEventListener("input", (event) => console.log(event.target.value));
-    searchButton.addEventListener("click", searchPokemon);
-});
+    
+    if (searchInput && searchButton) {
+        searchInput.addEventListener("input", (event) => console.log(event.target.value));
+        searchButton.addEventListener("click", searchPokemon);
+        console.log("HomePage initialized successfully");
+    } else {
+        console.error("Could not find search input or button");
+    }
+}
 
 function searchPokemon() {
     const searchInput = document.getElementById("pokemon-search").value;
@@ -33,4 +39,4 @@ function displayPokemonInfo(pokemon) {
     pokemonInfo.appendChild(card);
 }
 
-
+initializeHomePage();
